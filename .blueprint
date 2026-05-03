@@ -1,0 +1,22 @@
+created:
+    - database/factories/ModuleFactory.php
+    - database/factories/CourseFactory.php
+    - database/factories/LessonFactory.php
+    - database/factories/EnrollmentFactory.php
+    - database/factories/ProgressFactory.php
+    - database/migrations/2026_04_30_125825_create_modules_table.php
+    - database/migrations/2026_04_30_125826_create_courses_table.php
+    - database/migrations/2026_04_30_125827_create_lessons_table.php
+    - database/migrations/2026_04_30_125828_create_enrollments_table.php
+    - database/migrations/2026_04_30_125829_create_progress_table.php
+    - app/Models/Module.php
+    - app/Models/Course.php
+    - app/Models/Lesson.php
+    - app/Models/Enrollment.php
+    - app/Models/Progress.php
+models:
+    Module: { title: string, description: 'text nullable' }
+    Course: { title: string, description: text, image: 'string nullable', video: 'string nullable', price: 'decimal:8,2 default:0', module_id: 'id foreign:modules' }
+    Lesson: { title: string, description: 'text nullable', video: 'string nullable', course_id: 'id foreign:courses' }
+    Enrollment: { user_id: 'id foreign:users', course_id: 'id foreign:courses', indexes: [{ unique: 'user_id, course_id' }] }
+    Progress: { user_id: 'id foreign:users', lesson_id: 'id foreign:lessons', is_completed: 'boolean default:false', score: 'unsignedInteger default:0', indexes: [{ unique: 'user_id, lesson_id' }] }

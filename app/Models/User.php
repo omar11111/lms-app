@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
-// use Database\Factories\UserFactory;
+use App\Casts\EmailCast;
+use App\ValueObjects\Email;
+use Illuminate\Console\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -13,19 +16,28 @@ use Illuminate\Notifications\Notifiable;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    // /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+
+
+    protected $casts = [
+        'email'=> EmailCast::class,
+        'email_verified_at' => 'datetime',
+        'password'          => 'hashed',
+    ];
+
+    public function enrollments(): HasMany
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(Enrollment::class);
+    }
+
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, 'enrollments')->withTimestamps();
+    }
+
+    public function progress(): HasMany
+    {
+        return $this->hasMany(Progress::class);
     }
 }

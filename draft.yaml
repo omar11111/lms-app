@@ -1,0 +1,51 @@
+models:
+  Module:
+    title: string
+    description: text nullable
+
+  Course:
+    title: string
+    description: text
+    image: string nullable
+    video: string nullable
+    price: decimal:8,2 default:0
+    module_id: id foreign:modules
+
+  Lesson:
+    title: string
+    description: text nullable
+    video: string nullable
+    course_id: id foreign:courses
+
+  Enrollment:
+    user_id: id foreign:users
+    course_id: id foreign:courses
+    indexes:
+      - unique: user_id, course_id
+
+  Progress:
+    user_id: id foreign:users
+    lesson_id: id foreign:lessons
+    is_completed: boolean default:false
+    score: unsignedInteger default:0
+    indexes:
+      - unique: user_id, lesson_id
+
+relationships:
+  Module:
+    hasMany: Course
+
+  Course:
+    belongsTo: Module
+    hasMany: Lesson, Enrollment
+    belongsToMany: User through:enrollments
+
+  Lesson:
+    belongsTo: Course
+    hasMany: Progress
+
+  Enrollment:
+    belongsTo: User, Course
+
+  Progress:
+    belongsTo: User, Lesson
