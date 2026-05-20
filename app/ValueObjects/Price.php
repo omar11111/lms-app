@@ -1,7 +1,10 @@
 <?php
+
 namespace App\ValueObjects;
-class Price {
-  public function __construct(
+
+class Price
+{
+    public function __construct(
         public readonly float $amount,
     ) {
         if ($this->amount < 0) {

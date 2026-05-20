@@ -14,14 +14,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'description',
     'video',
     'course_id',
-    'duration'
+    'duration',
 ])]
 class Lesson extends Model
 {
     use HasFactory;
 
     public $casts = [
-        'duration' => LessonDurationCast::class
+        'duration' => LessonDurationCast::class,
     ];
 
     public function course(): BelongsTo

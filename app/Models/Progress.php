@@ -17,9 +17,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Progress extends Model
 {
     use HasFactory;
+
     protected $casts = [
         'is_completed' => 'boolean',
-        'score'        => 'integer',
+        'score' => 'integer',
     ];
 
     public function user(): BelongsTo

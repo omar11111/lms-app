@@ -1,4 +1,5 @@
 <?php
+
 namespace App\ValueObjects;
 
 class LessonDuration
@@ -24,13 +25,13 @@ class LessonDuration
         return sprintf('%02d:%02d', $minutes, $seconds);
     }
 
-    public function equals(Duration $other): bool
+    public function equals(LessonDuration $other): bool
     {
         return $this->seconds === $other->seconds;
     }
 
-    public function add(Duration $other): Duration
+    public function add(LessonDuration $other): LessonDuration
     {
-        return new Duration($this->seconds + $other->seconds);
+        return new LessonDuration($this->seconds + $other->seconds);
     }
 }

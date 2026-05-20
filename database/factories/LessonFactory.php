@@ -25,15 +25,15 @@ class LessonFactory extends Factory
             'Queues',
             'Testing',
             'Deployment',
-            'Security'
+            'Security',
         ];
 
         return [
-            'title'       => fake()->randomElement($prefixes) . ' ' . fake()->randomElement($topics),
+            'title' => fake()->randomElement($prefixes).' '.fake()->randomElement($topics),
             'description' => fake()->boolean(80) ? fake()->paragraph(2) : null,
-            'video'       => fake()->boolean(85) ? 'https://www.youtube.com/watch?v=' . fake()->lexify('???????????') : null,
-            'course_id'   => Course::factory(),
-            'duration'    => fake()->randomNumber()
+            'video' => fake()->boolean(85) ? 'https://www.youtube.com/watch?v='.fake()->lexify('???????????') : null,
+            'course_id' => Course::factory(),
+            'duration' => fake()->randomNumber(),
         ];
     }
 }

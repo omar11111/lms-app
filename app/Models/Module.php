@@ -15,7 +15,6 @@ class Module extends Model
 {
     use HasFactory;
 
-
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class);

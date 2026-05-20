@@ -11,24 +11,24 @@ class ProgressSeeder extends Seeder
 {
     public function run(): void
     {
-        // لكل enrollment، نعمل progress على lessons الـ course
-        Enrollment::with('course.lessons')->each(function ($enrollment) {
+        Enrollment::with('course.lessons')->each(function (Enrollment $enrollment) {
 
             $lessons = $enrollment->course->lessons;
 
-            // مش كل الـ lessons — بيكمل 40%-100% من الكورس
-            $completedCount = (int) ceil($lessons->count() * fake()->randomFloat(1, 0.4, 1.0));
+            $completedCount = (int) ceil(
+                $lessons->count() * fake()->randomFloat(1, 0.4, 1.0)
+            );
 
-            $lessons->take($completedCount)->each(function ($lesson) use ($enrollment) {
+            $lessons->take($completedCount)->each(function (Lesson $lesson) use ($enrollment) {
                 $score = fake()->numberBetween(0, 100);
 
                 Progress::firstOrCreate(
                     [
-                        'user_id'   => $enrollment->user_id,
+                        'user_id' => $enrollment->user_id,
                         'lesson_id' => $lesson->id,
                     ],
                     [
-                        'score'        => $score,
+                        'score' => $score,
                         'is_completed' => $score >= 50,
                     ]
                 );

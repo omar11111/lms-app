@@ -23,7 +23,7 @@ class ModuleFactory extends Factory
         ];
 
         return [
-            'title'       => fake()->unique()->randomElement($modules),
+            'title' => fake()->unique()->randomElement($modules),
             'description' => fake()->boolean(80) ? fake()->paragraph(3) : null,
         ];
     }
