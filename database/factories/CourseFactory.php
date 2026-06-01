@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\CourseStatus;
 use App\Models\Module;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +21,7 @@ class CourseFactory extends Factory
             'price' => fake()->randomElement([0, 9.99, 19.99, 49.99, 99.99, 149.99, 199.99]),
             'module_id' => Module::factory(),
             'total_hours' => fake()->randomNumber(5),
+            'status' => CourseStatus::Draft,
         ];
     }
 }
