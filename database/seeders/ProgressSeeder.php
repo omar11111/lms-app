@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Enrollment;
-use App\Models\Lesson;
 use App\Models\Progress;
 use Illuminate\Database\Seeder;
 

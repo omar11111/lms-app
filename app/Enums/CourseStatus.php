@@ -13,4 +13,7 @@ enum CourseStatus: string
     case PendingReview = 'pending_review';
 
     case Featured = 'Featured';
+  
+    case Scheduled = 'Scheduled';
+
 }
