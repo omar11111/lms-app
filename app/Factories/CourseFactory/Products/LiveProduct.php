@@ -15,11 +15,19 @@ class LiveProduct implements CourseCreatorInterface
     {
         $validated = $this->validate($data);
 
-        return Course::create([
-            $validated,
+        $scheduleFields = ['start_date', 'end_date', 'max_students', 'timezone', 'meeting_url', 'cover_image'];
+
+        $course = Course::create([
+            ...collect($validated)->except($scheduleFields)->all(),
             'type' => CourseType::Live,
             'status' => CourseStatus::Scheduled,
         ]);
+
+        $course->schedule()->create(
+            collect($validated)->only($scheduleFields)->all()
+        );
+
+        return $course->load('schedule');
     }
 
     private function validate(array $data): array

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Builders\CourseQueryBuilder;
 use App\Casts\PriceCast;
 use App\Enums\CourseStatus;
+use App\Enums\CourseType;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property Collection<int, Lesson> $lessons
@@ -20,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Module $module
  * @property User|null $instructor
  * @property Category|null $category
+ * @property CourseSchedule|null $schedule
  */
 #[Fillable([
     'title',
@@ -31,6 +34,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'total_hours',
     'instructor_id',
     'category_id',
+    'type',
+    'status',
 ])]
 class Course extends Model
 {
@@ -39,6 +44,7 @@ class Course extends Model
     protected $casts = [
         'price' => PriceCast::class,
         'status' => CourseStatus::class,
+        'type' => CourseType::class,
     ];
 
     public function newEloquentBuilder($query): CourseQueryBuilder
@@ -59,6 +65,11 @@ class Course extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function schedule(): HasOne
+    {
+        return $this->hasOne(CourseSchedule::class);
     }
 
     public function lessons(): HasMany

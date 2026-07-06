@@ -16,9 +16,19 @@ models:
     price: decimal:8,2 default:0
     total_hours: decimal:8,2
     status: enum:draft,published,archived,pending_review,Featured,Scheduled default:draft
+    type: enum:self-paced,cohort,live default:self-paced
     module_id: id foreign:modules
     instructor_id: id foreign:users nullable
     category_id: id foreign:categories nullable
+
+  CourseSchedule:
+    course_id: id foreign:courses unique
+    start_date: dateTime
+    end_date: dateTime
+    max_students: unsignedInteger
+    timezone: string nullable
+    meeting_url: string nullable
+    cover_image: string nullable
 
   Lesson:
     title: string
@@ -52,6 +62,10 @@ relationships:
     belongsTo (as instructor): User via:instructor_id
     hasMany: Lesson, Enrollment
     belongsToMany: User through:enrollments
+    hasOne: CourseSchedule
+
+  CourseSchedule:
+    belongsTo: Course
 
   User:
     hasMany (as taughtCourses): Course via:instructor_id

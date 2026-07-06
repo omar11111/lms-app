@@ -15,11 +15,17 @@ class CohortProduct implements CourseCreatorInterface
     {
         $validated = $this->validate($data);
 
-        return Course::create([
-            ...$validated,
+        $course = Course::create([
+            ...collect($validated)->except(['start_date', 'end_date', 'max_students'])->all(),
             'type' => CourseType::Cohort,
             'status' => CourseStatus::Scheduled,
         ]);
+
+        $course->schedule()->create(
+            collect($validated)->only(['start_date', 'end_date', 'max_students'])->all()
+        );
+
+        return $course->load('schedule');
     }
 
     private function validate(array $data): array
