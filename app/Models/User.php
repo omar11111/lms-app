@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Casts\EmailCast;
-use Illuminate\Console\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,6 +31,11 @@ class User extends Authenticatable
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'enrollments')->withTimestamps();
+    }
+
+    public function taughtCourses(): HasMany
+    {
+        return $this->hasMany(Course::class, 'instructor_id');
     }
 
     public function progress(): HasMany

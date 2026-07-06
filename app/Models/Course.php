@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Collection<int, Enrollment> $enrollments
  * @property Collection<int, User> $students
  * @property Module $module
+ * @property User|null $instructor
+ * @property Category|null $category
  */
 #[Fillable([
     'title',
@@ -27,6 +29,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'price',
     'module_id',
     'total_hours',
+    'instructor_id',
+    'category_id',
 ])]
 class Course extends Model
 {
@@ -45,6 +49,16 @@ class Course extends Model
     public function module(): BelongsTo
     {
         return $this->belongsTo(Module::class);
+    }
+
+    public function instructor(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'instructor_id');
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function lessons(): HasMany

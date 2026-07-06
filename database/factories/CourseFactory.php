@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Enums\CourseStatus;
+use App\Models\Category;
 use App\Models\Module;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CourseFactory extends Factory
@@ -22,6 +24,8 @@ class CourseFactory extends Factory
             'module_id' => Module::factory(),
             'total_hours' => fake()->randomNumber(5),
             'status' => CourseStatus::Draft,
+            'instructor_id' => User::factory(),
+            'category_id' => Category::factory(),
         ];
     }
 }

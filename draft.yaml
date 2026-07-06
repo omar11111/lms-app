@@ -3,13 +3,22 @@ models:
     title: string
     description: text nullable
 
+  Category:
+    title: string
+    slug: string unique
+    description: text nullable
+
   Course:
     title: string
     description: text
     image: string nullable
     video: string nullable
     price: decimal:8,2 default:0
+    total_hours: decimal:8,2
+    status: enum:draft,published,archived,pending_review,Featured,Scheduled default:draft
     module_id: id foreign:modules
+    instructor_id: id foreign:users nullable
+    category_id: id foreign:categories nullable
 
   Lesson:
     title: string
@@ -35,10 +44,17 @@ relationships:
   Module:
     hasMany: Course
 
+  Category:
+    hasMany: Course
+
   Course:
-    belongsTo: Module
+    belongsTo: Module, Category
+    belongsTo (as instructor): User via:instructor_id
     hasMany: Lesson, Enrollment
     belongsToMany: User through:enrollments
+
+  User:
+    hasMany (as taughtCourses): Course via:instructor_id
 
   Lesson:
     belongsTo: Course
