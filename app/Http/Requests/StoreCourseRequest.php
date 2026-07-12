@@ -14,9 +14,40 @@ class StoreCourseRequest extends FormRequest
     }
 
     public function rules(): array
-    {
-        return [
-            'type' => ['required', new Enum(CourseType::class)],
-        ];
-    }
+{
+    return [
+
+        'title'=>[
+            'required',
+            'string',
+            'max:255',
+        ],
+
+        'description'=>[
+            'required',
+            'string',
+        ],
+
+        'price'=>[
+            'required',
+            'numeric',
+            'min:0',
+        ],
+
+        'module_id'=>[
+            'required',
+            'exists:modules,id'
+        ],
+
+        'category_id'=>[
+            'nullable',
+            'exists:categories,id'
+        ],
+
+        'type'=>[
+            'required',
+            new Enum(CourseType::class)
+        ],
+    ];
+}
 }
