@@ -29,6 +29,6 @@ class CourseQueryBuilder extends Builder
 
     public function withRelations(): static
     {
-        return $this->with(['module', 'lessons', 'enrollments', 'students']);
+        return $this->with(['module', 'lessons', 'enrollments', 'students', 'instructor', 'category', 'schedule']);
     }
 }

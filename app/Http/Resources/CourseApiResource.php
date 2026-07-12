@@ -36,7 +36,7 @@ class CourseApiResource extends JsonResource
                 'category',
                 fn() => [
                     'id' => $this->category->id,
-                    'name' => $this->category->name,
+                    'title' => $this->category->title,
                 ]
             ),
             'instructor' => $this->whenLoaded(
@@ -46,6 +46,16 @@ class CourseApiResource extends JsonResource
                     'name' => $this->instructor->name,
                 ]
             ),
+            'schedule' => $this->whenLoaded(
+                'schedule',
+                fn() => [
+                    'id' => $this->schedule->id,
+                    'start_date' => $this->schedule->start_date,
+                    'end_date'=> $this->schedule->end_date,
+                    'max_students' => $this->schedule->max_students
+                ]
+            ),
+
         ];
     }
 }

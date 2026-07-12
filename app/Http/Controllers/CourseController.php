@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\CourseCreationException;
 use App\Factories\CourseFactory\CourseResolver;
 use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Resources\CourseApiResource;
 use App\Models\Course;
 use Illuminate\Http\JsonResponse;
@@ -46,10 +47,24 @@ class CourseController extends Controller
             'module',
             'category',
             'instructor',
+            'schedule'
         ]);
 
         return new CourseApiResource($course);
     }
 
-    public function update(Course $course,) {}
+    public function update(Course $course, UpdateCourseRequest $request) {
+        $course->update($request->validated());
+        return new CourseApiResource($course);
+    }
+
+    public function destroy(Course $course){
+        $course->delete();
+        return response()->json([
+                'success' => true,
+                'message' => $course->title.' Course Deleted Successfully',
+            ], 200);
+    }
+
+
 }
