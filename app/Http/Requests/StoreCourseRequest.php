@@ -14,40 +14,47 @@ class StoreCourseRequest extends FormRequest
     }
 
     public function rules(): array
-{
-    return [
+    {
+        return [
 
-        'title'=>[
-            'required',
-            'string',
-            'max:255',
-        ],
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+            ],
 
-        'description'=>[
-            'required',
-            'string',
-        ],
+            'description' => [
+                'required',
+                'string',
+            ],
 
-        'price'=>[
-            'required',
-            'numeric',
-            'min:0',
-        ],
+            'price' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
 
-        'module_id'=>[
-            'required',
-            'exists:modules,id'
-        ],
+            'instructor_id' => [
+                'required',
+                'exists:users,id'
+            ],
 
-        'category_id'=>[
-            'nullable',
-            'exists:categories,id'
-        ],
+            'module_id' => [
+                'required',
+                'exists:modules,id'
+            ],
 
-        'type'=>[
-            'required',
-            new Enum(CourseType::class)
-        ],
-    ];
-}
+            'category_id' => [
+                'required',
+                'exists:categories,id'
+            ],
+
+            'total_hours' => 'required|integer|min:1',
+
+            'type' => [
+                'required',
+                new Enum(CourseType::class)
+            ],
+        ];
+    }
 }

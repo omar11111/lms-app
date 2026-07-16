@@ -39,11 +39,13 @@ class CohortProduct implements CourseCreatorInterface
             'start_date' => 'required|date|after:now',
             'end_date' => 'required|date|after:start_date',
             'max_students' => 'required|integer|min:1',
+            'category_id' => 'nullable|integer',
+            'instructor_id' => 'nullable|integer',
         ]);
 
         if ($validator->fails()) {
             throw new CourseCreationException(
-                'خطأ في بيانات Cohort: '.$validator->errors()->first()
+                'خطأ في بيانات Cohort: ' . $validator->errors()->first()
             );
         }
 

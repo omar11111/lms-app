@@ -30,11 +30,13 @@ class SelfPacedProduct implements CourseCreatorInterface
             'price' => 'required|numeric|min:0',
             'total_hours' => 'required|integer|min:1',
             'module_id' => 'required|integer|exists:modules,id',
+            'category_id' => 'nullable|integer',
+            'instructor_id' => 'nullable|integer',
         ]);
 
         if ($validator->fails()) {
             throw new CourseCreationException(
-                'خطأ في بيانات Self-Paced: '.$validator->errors()->first()
+                'خطأ في بيانات Self-Paced: ' . $validator->errors()->first()
             );
         }
 
