@@ -44,11 +44,13 @@ class LiveProduct implements CourseCreatorInterface
             'timezone' => 'required|timezone',
             'meeting_url' => 'required|url',
             'cover_image' => 'required|string',
+            'category_id' => 'nullable|integer',
+            'instructor_id' => 'nullable|integer',
         ]);
 
         if ($validator->fails()) {
             throw new CourseCreationException(
-                'خطأ في بيانات Live: '.$validator->errors()->first()
+                'خطأ في بيانات Live: ' . $validator->errors()->first()
             );
         }
 
