@@ -49,7 +49,11 @@ class StoreCourseRequest extends FormRequest
                 'exists:categories,id'
             ],
 
-            'total_hours' => ['required|integer|min:1'],
+            'total_hours' => [
+                'required',
+                'integer',
+                'min:1',
+            ],
 
             'type' => [
                 'required',
