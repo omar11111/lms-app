@@ -15,7 +15,6 @@ class CourseApiResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
@@ -50,8 +49,8 @@ class CourseApiResource extends JsonResource
                 'schedule',
                 fn() => [
                     'id' => $this->schedule->id,
-                    'start_date' => $this->schedule->start_date,
-                    'end_date'=> $this->schedule->end_date,
+                    'start_date' => $this->schedule->start_date?->toDateString(),
+                    'end_date'   => $this->schedule->end_date?->toDateString(),
                     'max_students' => $this->schedule->max_students
                 ]
             ),
